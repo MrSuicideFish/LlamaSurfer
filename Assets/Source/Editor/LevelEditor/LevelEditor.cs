@@ -147,8 +147,13 @@ public class LevelEditor : EditorTool
             GUILayout.Label($"TrackPosition ({trackPosition})");
             using (new GUILayout.HorizontalScope())
             {
-                if (GUILayout.Button("<<")) _track.Step(-0.04f);
-                if (GUILayout.Button(">>")) _track.Step(0.04f);
+                if (GUILayout.Button("<<")) _track.Step(-Time.deltaTime);
+                if (GUILayout.Button(">>")) _track.Step(Time.deltaTime);
+            }
+
+            if (GUILayout.Button("Rebuild"))
+            {
+                RebuildCameraTrack();
             }
 
             if (EditorGUI.EndChangeCheck())

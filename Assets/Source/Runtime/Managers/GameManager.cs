@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
 
     public UnityEvent OnPlayerBlockAdded = new UnityEvent();
     public UnityEvent OnPlayerBlockRemoved = new UnityEvent();
+    
+    public Material[] boxMaterials;
 
     private void OnEnable()
     {
@@ -77,6 +79,9 @@ public class GameManager : MonoBehaviour
             SurfBlockView newView = GameObject.Instantiate(newViewRes, playerController.surfBlockParent);
             newView.transform.localPosition = new Vector3(0, playerController.BlockCount()-1, 0);
             newView.transform.localEulerAngles = Vector3.zero;
+
+            int matId = UnityEngine.Random.Range(0, boxMaterials.Length);
+            newView.topRenderer.material = boxMaterials[matId];
             
             OnPlayerBlockAdded?.Invoke();
         }

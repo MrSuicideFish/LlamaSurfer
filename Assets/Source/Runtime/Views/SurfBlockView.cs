@@ -7,6 +7,9 @@ public class SurfBlockView : MonoBehaviour
     public Collider collider;
     public SpringJoint joint;
 
+    public MeshRenderer topRenderer;
+    public MeshRenderer bottomRenderer;
+
     public void Init(SurfBlockModel model)
     {
     }
