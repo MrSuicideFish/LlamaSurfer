@@ -36,7 +36,7 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
-        targetTrackPos = cameraPath.MaxUnit(CinemachinePathBase.PositionUnits.Distance) * TrackController.Instance.TrackTime;
+        targetTrackPos = cameraPath.MaxUnit(CinemachinePathBase.PositionUnits.Distance) * (TrackController.Instance.TrackTime + TrackController.Instance.pathTargetLead);
         UpdatePositionToPath();
     }
 

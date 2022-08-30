@@ -15,8 +15,8 @@ public class TrackController : MonoBehaviour
     public SplineContainer spline;
     public Grid _grid { get; private set; }
     
-    private const float MIN_TRACK_POSITION = 0.01f;
-    private const float MAX_TRACK_POSITION = 0.99f;
+    private const float MIN_TRACK_POSITION = 0.0001f;
+    private const float MAX_TRACK_POSITION = 0.9999f;
     public float trackSpeed = 1.0f;
 
     public UnityEvent OnTrackEnd;
@@ -155,7 +155,7 @@ public class TrackController : MonoBehaviour
 
     private void Step()
     {
-        TrackTime += trackSpeed * Time.deltaTime;
+        TrackTime += (1.0f / spline.Spline.GetLength()) * trackSpeed * Time.deltaTime;
 
         // track end
         if (TrackTime >= MAX_TRACK_POSITION)
@@ -165,7 +165,7 @@ public class TrackController : MonoBehaviour
             OnTrackEnd?.Invoke();
         }
 
-        GetPathTarget().DOMove(spline.EvaluatePosition(TrackTime + pathTargetLead), 1 * Time.deltaTime);
+        GetPathTarget().DOMove(GetTrackPositionAt(TrackTime + pathTargetLead), 1 * Time.deltaTime);
     }
 
     public void SetTrackTime(float time, bool fireTrackEvents = true)
@@ -214,6 +214,11 @@ public class TrackController : MonoBehaviour
     public Vector3 GetTrackPosition()
     {
         return spline.EvaluatePosition(TrackTime);
+    }
+
+    public Vector3 GetTrackPositionAt(float time)
+    {
+        return spline.EvaluatePosition(time);
     }
 
     public Vector3 GetTrackTangent()
